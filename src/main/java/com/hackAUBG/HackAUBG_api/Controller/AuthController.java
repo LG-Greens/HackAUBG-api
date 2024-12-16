@@ -32,14 +32,17 @@ public class AuthController {
     @PostMapping("/login")
     public AuthResponse login(@RequestBody AuthRequest authRequest) {
         try {
+            System.err.println("Attempting to authenticate user: " + authRequest.getUsername());
             authenticationManager.authenticate(
                     new UsernamePasswordAuthenticationToken(
                             authRequest.getUsername(),
                             authRequest.getPassword()
                     )
             );
+            System.err.println("Authentication successful for user: " + authRequest.getUsername());
             return new AuthResponse(authRequest.getUsername(), jwtUtil.generateToken(authRequest.getUsername()));
         } catch (Exception e) {
+            System.err.println("Authentication failed: " + e.getMessage());
             throw new RuntimeException("Invalid username or password");
         }
     }

@@ -20,12 +20,15 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-      com.hackAUBG.HackAUBG_api.Model.User userEntity = userRepository.findByUsername(username)
+        System.err.println("Attempting to load user with username: " + username);
+
+        com.hackAUBG.HackAUBG_api.Model.User userEntity = userRepository.findByUsername(username)
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + username));
 
+        System.err.println("User found: " + userEntity.getUsername());
         return User.builder()
                 .username(userEntity.getUsername())
-                .password(userEntity.getPassword())
+                .password(userEntity.getPassword()) // Криптирана парола
                 .roles(userEntity.getRole())
                 .build();
     }

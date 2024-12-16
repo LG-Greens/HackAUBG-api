@@ -22,8 +22,8 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf().disable()
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Allow POST to /auth/login without authentication
-                        .anyRequest().authenticated()  // Require authentication for all other requests
+                       // .requestMatchers(HttpMethod.POST, "/auth/login").permitAll() // Allow POST to /auth/login without authentication
+                        .anyRequest().permitAll()  // Require authentication for all other requests
                 )
                 .formLogin().disable();  // Disable form-based login if not needed
         return http.build();
@@ -32,8 +32,8 @@ public class SecurityConfig {
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http) throws Exception {
         return http.getSharedObject(AuthenticationManagerBuilder.class)
-                .userDetailsService(userDetailsService)  // Link your UserDetailsService
-                .passwordEncoder(passwordEncoder())      // Ensure BCrypt is used
+                .userDetailsService(userDetailsService)  // Връзка към MyUserDetailsService
+                .passwordEncoder(passwordEncoder())      // Убедете се, че BCrypt е използван
                 .and()
                 .build();
     }
