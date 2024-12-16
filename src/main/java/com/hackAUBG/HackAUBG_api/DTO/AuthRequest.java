@@ -1,9 +1,9 @@
-package com.hackAUBG.HackAUBG_api;
+package com.hackAUBG.HackAUBG_api.DTO;
 
 import lombok.Data;
 
 @Data
-public class LoginRequest {
+public class AuthRequest {
     private String username;
     private String password;
 }
